@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Enviador/receptor de mensajes";
+}
+
+
+<div id="app" class="container">
+
+    <h3>Enviador de mensajes - Azure SignalR</h3>
+
+    <div>
+        Escribe un texto para enviar a los clientes conectados:
+        <br />
+        <input type="text" id="newmessage" value="">
+        <br />
+        <button onclick="sendMessage(document.getElementById('newmessage').value)">Enviar Mensaje</button>
+    </div>
+
+    <h3>Receptor de mensajes - Azure SignalR</h3>
+    <div id="status"></div>
+    <div id="users"></div>
+    <div v-if="ready">
+        <div id="texto" border="1">
+            Los mensajes recibidos son:
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl('/message')
+            .build();
+
+        connection.start()
+            .then(
+                document.getElementById("status").innerHTML = "status: Connected"
+            )
+            .catch(function (error) {
+                document.getElementById("status").innerHTML = "status: NOT Connected"
+                console.error(error.message);
+            });
+
+        connection.on("users-connected", function (count) {
+            document.getElementById("users").innerHTML = "users connected: " + count;
+        });
+
+        connection.on("new-message", function (msg) {
+            var linebreak = document.createElement("br");
+            var text = document.createTextNode(msg);
+            document.getElementById("texto").appendChild(linebreak);
+            document.getElementById("texto").appendChild(text);
+        });
+
+
+        function sendMessage(message) {
+            connection.invoke("BroadcastMessage", "👍 - " + message);
+        };
+
+    </script>
+}

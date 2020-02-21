@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="app" class="container">
+    <h3>Receptor de mensajes - Cliente/Servidor</h3>
+    <div id="status"></div>
+    <div id="users"></div>
+    <div v-if="ready">
+        <div id="texto" border="1">
+            Los mensajes recibidos son:
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+
+        //Para simular mecanismo de respaldo por SSE descomentar la primera línea
+        //para simular mecanismo de respaldo por Long Polling descomentar las dos líneas
+        //Curiosidad, si lo probais con Edge vereis que no acepta EventSource
+        //window.WebSocket = undefined;
+        //window.EventSource = undefined;
+
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl('/message')
+            .build();
+
+        connection.start()
+            .then(
+                document.getElementById("status").innerHTML = "status: Connected"
+            )
+            .catch(function (error) {
+                document.getElementById("status").innerHTML = "status: NOT Connected"
+                console.error(error.message);
+            });
+
+        connection.on("users-connected", function (count) {           
+            document.getElementById("users").innerHTML = "users connected: " + count;
+        });
+
+        connection.on("new-message", function (msg) {
+            var linebreak = document.createElement("br");
+            var text = document.createTextNode(msg);
+            document.getElementById("texto").appendChild(linebreak);
+            document.getElementById("texto").appendChild(text);
+        });
+
+    </script>
+}
