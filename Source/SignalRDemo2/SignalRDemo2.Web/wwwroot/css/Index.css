@@ -1,0 +1,98 @@
+﻿h1.txt-header{
+    text-align:left;
+}
+
+div.image-workarea {
+    border: 0px;
+    border-style: solid;
+    padding: 10px;
+    width: 100%;
+}
+
+div.padding {
+    padding-left: 80px;
+}
+
+div.image-container{
+    display:inline;
+}
+
+img.img-properties {
+    width: 200px;
+    height: 200px;
+    margin-right: 100px;
+}
+
+div.button-workarea {
+    border: 0px;
+    border-style: solid;
+    padding: 10px;
+    width: 100%;
+}
+
+div.button-container {
+    display: inline;
+}
+
+button.style {
+    
+}
+
+#texto-confirmacion {
+    display: inline;
+}
+
+/* ***************************************************** */
+/* ***************************************************** */
+/* ***************************************************** */
+
+.message {
+    display: flex;
+    flex-direction: column;
+}
+
+.newMessage {
+    background-color: rgb(245, 245, 245);
+    border-color: red;
+    border-style: solid;
+    text-align: left;
+    /*width: 400;*/
+    border-radius: 14px 14px 14px 14px;
+    -moz-border-radius: 14px 14px 14px 14px;
+    -webkit-border-radius: 14px 14px 14px 14px;
+    border: 0px solid #000000;
+    padding-left: 14px;
+    /*float: left;*/
+    /*clear: both;*/
+    margin: 5px;
+    max-width: 50%;
+    min-width: 20%;
+    align-self: flex-start;
+}
+
+.user {
+    display: inline-block;
+}
+
+.text {
+    display: inline-block;
+}
+
+.timeMessageIzquierda {
+    padding-right: 14px;
+    text-align: right;
+}
+
+.timeMessageDerecha {
+    padding-right: 14px;
+    text-align: left;
+}
+
+.mentionedMe {
+    /*float: right; */
+    background-color: #a4c639;
+    /* clear: both; */
+    text-align: right;
+    padding-right: 14px;
+    align-self: flex-end;
+}

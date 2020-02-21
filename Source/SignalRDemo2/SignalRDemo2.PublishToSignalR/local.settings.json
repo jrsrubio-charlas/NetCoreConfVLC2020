@@ -1,0 +1,17 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+
+    "MyTwitterUser": "{xxx}",
+
+    "AzureSignalRConnectionString": "Endpoint={xxx};AccessKey={xxx};Version=1.0;",
+    "EhConnectionString": "Endpoint={xxx};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={xxx}"
+  },
+  "Host": {
+    "LocalHttpPort": 44327,
+    "CORS": "*",
+    "CORSCredentials": true
+  }
+}

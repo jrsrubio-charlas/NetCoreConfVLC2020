@@ -1,0 +1,93 @@
+﻿@model EndPointsSettingsModel;
+@{
+    ViewData["Title"] = "Visibilidad NetCoreConf VLC";
+
+    ViewData["FunctionUrl"] = Model.FunctionURL;
+}
+
+<h2 class="title">@ViewData["Title"]</h2>
+
+
+<div id="waitingresults">
+    Esperando a recibir nuevos tweets......vamos dale caña...........
+</div>
+
+
+<div id="messages" class="message">
+</div>
+
+
+@section Scripts{
+    <script>
+        window.onload = function () {
+            document.getElementById('waitingresults').style.display = 'block';
+            document.getElementById('messages').style.display = 'none';
+        }
+    </script>
+
+    <script>
+
+        var apiBaseUrl = '@ViewData["FunctionUrl"]';
+
+        const data = {
+            newMessage: '',
+            messages: []
+        };
+
+        getConnectionInfo().then(info => {
+            // make compatible with old and new SignalRConnectionInfo
+            info.accessToken = info.accessToken || info.accessKey;
+            info.url = info.url || info.endpoint;
+
+            const options = {
+                accessTokenFactory: () => info.accessToken
+            };
+
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl(info.url, options)
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            connection.on('newtweet', newtweet)
+            connection.onclose(() => console.log('disconnected'));
+            console.log('connecting...');
+
+            connection.start()
+                .then(() => console.log('connected!'))
+                .catch(console.error);
+        }).catch(alert);
+
+        function getConnectionInfo() {
+            return axios.post(`${apiBaseUrl}/api/negotiate`, null, getAxiosConfig())
+            .then(resp => resp.data);
+        }
+
+        function getAxiosConfig() {
+            const config = {
+                headers: {}
+            };
+            return config;
+        }
+
+        function newtweet(msg) {
+            var obj = JSON.parse(msg);
+
+            var messagePosition = '';
+            if (obj.MentionedMe) {
+                messagePosition =' mentionedMe'
+            }
+            
+            var content = document.getElementById("messages").innerHTML;
+            var newMessageTweet = "<div class='newMessage" + messagePosition + "'><div class='user'>" + obj.UserNick + "(" + obj.UserName + ")</div > <br /> <div class='text'>" + obj.MessageTweet + "</div> <div class='timeMessageDerecha'>" + "</div>";
+            
+            document.getElementById("messages").innerHTML = content + newMessageTweet;
+
+
+
+            document.getElementById('waitingresults').style.display = 'none';
+            document.getElementById('messages').style.display = 'block';
+        }
+
+    </script>
+}
+
