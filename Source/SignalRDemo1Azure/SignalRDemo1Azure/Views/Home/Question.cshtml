@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Recomiendame....please";
+}
+
+
+<div id="app" class="container">
+
+    <h3>Recomiendame.....please</h3>
+    Status: <div id="status"></div>
+    <div />
+    Connected users: <div id="users"></div>
+    <div />
+    <br />
+
+    <div>
+        Escribe la pregunta para la cual quieres recibir recomendaciones:
+        <br />
+        <input type="text" id="newquestion" value="" size="40">
+        <br />
+        <button onclick="sendQuestion(document.getElementById('newquestion').value)">Enviar pregunta</button>
+        <br />
+        <br />
+    </div>
+
+    <div id="ready">
+        <div id="question" border="1" class="question"></div>
+        <br />
+        <div border="1" class="">Las recomendaciones recibidas han sido:</div>
+        <div id="answer" border="1" class="answer"></div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl('/message')
+            .build();
+
+        var pendingQuestion = "Venga va.....escribe una pregunta....que están esperando 🙏";
+
+        window.onload = function () {
+            document.getElementById("question").innerHTML = pendingQuestion;
+        };
+
+        connection.start()
+            .then(x => {
+                document.getElementById("status").innerHTML = "Connected";
+                document.getElementById("status").className = "statusSucceeded";
+            }
+            )
+            .catch(function (error) {
+                document.getElementById("status").innerHTML = "NOT Connected";
+                document.getElementById("status").className = "statusError";
+                console.error(error.message);
+            });
+
+        connection.on("users-connected", function (count) {
+            document.getElementById("users").innerHTML = count;
+            document.getElementById("users").className = "numberOfConnectedUsers";
+        });
+
+        connection.on("new-question", function (msg) {
+            document.getElementById("question").innerHTML = msg;
+
+            document.getElementById("answer").innerHTML = "";
+        });
+
+        connection.on("new-answer", function (msg) {
+            var linebreak = document.createElement("br");
+            var text = document.createTextNode(msg);
+            document.getElementById("answer").appendChild(linebreak);
+            document.getElementById("answer").appendChild(text);
+        });
+
+        function sendQuestion(text) {            
+            connection.invoke("BroadcastQuestion", text);
+        };
+        
+    </script>
+}
