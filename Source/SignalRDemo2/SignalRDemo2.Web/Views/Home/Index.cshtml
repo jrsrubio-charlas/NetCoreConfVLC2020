@@ -13,7 +13,9 @@
 </div>
 
 
-<div id="messages" class="message">
+<div id="main_messages">
+    <div id="messages" class="message">
+    </div>
 </div>
 
 
@@ -21,7 +23,7 @@
     <script>
         window.onload = function () {
             document.getElementById('waitingresults').style.display = 'block';
-            document.getElementById('messages').style.display = 'none';
+            document.getElementById('main_messages').style.display = 'none';
         }
     </script>
 
@@ -71,21 +73,21 @@
 
         function newtweet(msg) {
             var obj = JSON.parse(msg);
-
+            
             var messagePosition = '';
-            if (obj.MentionedMe) {
-                messagePosition =' mentionedMe'
+            if (obj.MentionedMe === true) {
+                messagePosition = ' mentionedMe'
             }
             
             var content = document.getElementById("messages").innerHTML;
-            var newMessageTweet = "<div class='newMessage" + messagePosition + "'><div class='user'>" + obj.UserNick + "(" + obj.UserName + ")</div > <br /> <div class='text'>" + obj.MessageTweet + "</div> <div class='timeMessageDerecha'>" + "</div>";
+            var newMessageTweet = "<div class='newMessage" + messagePosition + "'><div class='user'>" + obj.CreatedByScreenName + "(" + obj.CreatedByName + ")</div > <br /> <div class='text'>" + obj.Text + "</div> <div class='timeMessageDerecha'>" + "</div>";
             
             document.getElementById("messages").innerHTML = content + newMessageTweet;
 
 
 
             document.getElementById('waitingresults').style.display = 'none';
-            document.getElementById('messages').style.display = 'block';
+            document.getElementById('main_messages').style.display = 'block';
         }
 
     </script>
