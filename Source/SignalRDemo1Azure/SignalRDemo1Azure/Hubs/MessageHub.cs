@@ -10,7 +10,7 @@ namespace SignalRDemo1Azure.Hubs
 
         //Cuando un usuario se conecta
         public override Task OnConnectedAsync()
-        {
+        {            
             return Clients.All.SendAsync("users-connected", ++users);
         }
 
@@ -20,17 +20,18 @@ namespace SignalRDemo1Azure.Hubs
             return Clients.All.SendAsync("users-connected", --users);
         }
 
-
         //Publicar pregunta
         public Task BroadcastQuestion(string message)
         {
             return Clients.All.SendAsync("new-question", message);
         }
 
-        //Publicar recomendaciones
-        public Task BroadcastAnswer(string message)
-        {
-            return Clients.All.SendAsync("new-answer", message);
+        //Publicar respuestas
+        public void BroadcastAnswer(string message)
+        {            
+            Clients.Caller.SendAsync("new-answer", $"Gracias por participar 👏👏👏👏 -- {Context.ConnectionId} - {message}");
+            Clients.Others.SendAsync("new-answer", $"{Context.ConnectionId} - {message}");
+            //return Clients.All.SendAsync("new-answer", $"{Context.ConnectionId} - {message}");
         }
     }
 }

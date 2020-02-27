@@ -1,11 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Recomiendame....please";
+    ViewData["Title"] = "Azure SignalR Demo1";
 }
 
 
 <div id="app" class="container">
-
-    <h3>Recomiendame.....please</h3>
+    <br />
     Status: <div id="status"></div>
     <div />
     Connected users: <div id="users"></div>
@@ -13,11 +12,11 @@
     <br />
 
     <div>
-        Escribe la pregunta para la cual quieres recibir recomendaciones:
+        Escribe una pregunta....y no te pases.....🤔:
         <br />
         <input type="text" id="newquestion" value="" size="40">
         <br />
-        <button onclick="sendQuestion(document.getElementById('newquestion').value)">Enviar pregunta</button>
+        <button onclick="sendQuestion(document.getElementById('newquestion').value)">Enviar</button>
         <br />
         <br />
     </div>
@@ -25,7 +24,7 @@
     <div id="ready">
         <div id="question" border="1" class="question"></div>
         <br />
-        <div border="1" class="">Las recomendaciones recibidas han sido:</div>
+        <div border="1" class="">....mira lo que te han dicho....</div>
         <div id="answer" border="1" class="answer"></div>
     </div>
 </div>

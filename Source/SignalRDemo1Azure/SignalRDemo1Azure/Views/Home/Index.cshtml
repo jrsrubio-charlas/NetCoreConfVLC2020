@@ -1,9 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Recomiendame....please";
+    ViewData["Title"] = "Azure SignalR Demo1";
 }
 
 <div id="app" class="container">
-    <h3>Recomiendame.....please</h3>
+    <br />
     Status: <div id="status"></div>
     <div />
     Connected users: <div id="users"></div>
@@ -12,18 +12,18 @@
     <div id="ready">
         <div id="question" border="1" class="question"></div>
         <br />
-        <div border="1" class="">Las recomendaciones recibidas han sido:</div>
+        <div border="1" class="">Las respuestas recibidas han sido:</div>
         <div id="answer" border="1" class="answer"></div>
     </div>
 
     <div>
         <br />
         <br />
-        Qué me recomiendas???
+        And your answer is......???
         <br />
         <input type="text" id="newanswer" value="" size="40">
         <br />
-        <button onclick="sendAnswer(document.getElementById('newanswer').value)">Enviar recomendación</button>
+        <button onclick="sendAnswer(document.getElementById('newanswer').value)">Enviar</button>
     </div>
 </div>
 
@@ -38,7 +38,7 @@
         window.onload = function () {
             document.getElementById("question").innerHTML = pendingQuestion;
         };
-
+        
         connection.start()
             .then(x => {
                 document.getElementById("status").innerHTML = "Connected";
