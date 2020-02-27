@@ -56,22 +56,20 @@ button.style {
     border-color: red;
     border-style: solid;
     text-align: left;
-    /*width: 400;*/
     border-radius: 14px 14px 14px 14px;
     -moz-border-radius: 14px 14px 14px 14px;
     -webkit-border-radius: 14px 14px 14px 14px;
     border: 0px solid #000000;
     padding-left: 14px;
-    /*float: left;*/
-    /*clear: both;*/
     margin: 5px;
-    max-width: 50%;
+    max-width: 80%;
     min-width: 20%;
     align-self: flex-start;
 }
 
 .user {
     display: inline-block;
+    color: blue;
 }
 
 .text {
@@ -80,18 +78,18 @@ button.style {
 
 .timeMessageIzquierda {
     padding-right: 14px;
-    text-align: right;
+    text-align: left;
+    color: gray;
 }
 
 .timeMessageDerecha {
     padding-right: 14px;
-    text-align: left;
+    text-align: right;
+    color: gray;
 }
 
 .mentionedMe {
-    /*float: right; */
     background-color: #a4c639;
-    /* clear: both; */
     text-align: right;
     padding-right: 14px;
     align-self: flex-end;

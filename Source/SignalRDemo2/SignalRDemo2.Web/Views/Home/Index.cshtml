@@ -1,6 +1,6 @@
 ﻿@model EndPointsSettingsModel;
 @{
-    ViewData["Title"] = "Visibilidad NetCoreConf VLC";
+    ViewData["Title"] = "Visibilidad #netcoreconf Valencia 2020";
 
     ViewData["FunctionUrl"] = Model.FunctionURL;
 }
@@ -9,7 +9,7 @@
 
 
 <div id="waitingresults">
-    Esperando a recibir nuevos tweets......vamos dale caña...........
+    Esperando a recibir nuevos tweets......vamos a darle caña 💪💪💪💪...........
 </div>
 
 
@@ -75,16 +75,16 @@
             var obj = JSON.parse(msg);
             
             var messagePosition = '';
+            var datetimePosition = 'timeMessageIzquierda';
             if (obj.MentionedMe === true) {
-                messagePosition = ' mentionedMe'
+                messagePosition = ' mentionedMe';
+                datetimePosition = 'timeMessageDerecha';
             }
             
             var content = document.getElementById("messages").innerHTML;
-            var newMessageTweet = "<div class='newMessage" + messagePosition + "'><div class='user'>" + obj.CreatedByScreenName + "(" + obj.CreatedByName + ")</div > <br /> <div class='text'>" + obj.Text + "</div> <div class='timeMessageDerecha'>" + "</div>";
+            var newMessageTweet = "<div class='newMessage" + messagePosition + "'><div class='user'>" + obj.CreatedByScreenName + " (" + obj.CreatedByName + ")</div > <br /> <div class='text'>" + obj.Text + "</div> <div class='" + datetimePosition + "'>" + obj.CreatedAt + "</div>";
             
             document.getElementById("messages").innerHTML = content + newMessageTweet;
-
-
 
             document.getElementById('waitingresults').style.display = 'none';
             document.getElementById('main_messages').style.display = 'block';
