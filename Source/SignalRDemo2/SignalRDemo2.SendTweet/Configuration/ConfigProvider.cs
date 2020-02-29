@@ -1,12 +1,24 @@
-﻿using System.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 
 namespace SignalRDemo2.SendTweet.Configuration
 {
     public class ConfigProvider
     {
-        public static string ConsumerKey => ConfigurationManager.AppSettings["consumerKey"];
-        public static string ConsumerSecret => ConfigurationManager.AppSettings["consumerSecret"];
-        public static string AccessToken => ConfigurationManager.AppSettings["accessToken"];
-        public static string AccessTokenSecret => ConfigurationManager.AppSettings["accessTokenSecret"];
+        private static IConfiguration Config;
+
+        public static IConfiguration GetConfig()
+        {
+            if (Config == null)
+            {
+                Config = new ConfigurationBuilder()
+                        .SetBasePath(Environment.CurrentDirectory)
+                        .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+                        .AddEnvironmentVariables()
+                        .Build();
+            }
+
+            return Config;
+        }
     }
 }
