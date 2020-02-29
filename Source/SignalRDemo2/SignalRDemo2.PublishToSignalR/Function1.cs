@@ -10,12 +10,16 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Newtonsoft.Json;
 using SignalRDemo2.CrossCutting.Models;
+using SignalRDemo2.CrossCutting.ModelsSettings;
 using SignalRDemo2.PublishToSignalR.Configuration;
 
 namespace SignalRDemo2.PublishToSignalR
-{
+{    
     public static class Function1
     {
+
+        const string EhEntityPath = "newtweettosend";
+
         [FunctionName("negotiate")]
         public static SignalRConnectionInfo GetSignalRInfo(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequest req,
@@ -24,8 +28,7 @@ namespace SignalRDemo2.PublishToSignalR
 
             return connectionInfo;
         }
-        
-        
+                
         [FunctionName("newtweet")]
         public static async Task PublishNewTweetOnSignalR(
             [EventHubTrigger("newtweet", Connection = "EhConnectionString")] EventData[] events,
@@ -58,7 +61,17 @@ namespace SignalRDemo2.PublishToSignalR
                             Target = "newTweet",
                             Arguments = new[] { JsonConvert.SerializeObject(newTweetReceivedExpanded) }
                         });
-                    
+
+                    if (newTweetReceivedExpanded.MentionedMe)
+                    {
+                        Services.SendToEventHubService sendToEventHub = new Services.SendToEventHubService(new EventHubSettingsModels
+                        {
+                            EhConnectionString = AppSettingsProvider.EhConnectionStringToSendTweet
+                        });
+
+                        sendToEventHub.SendMessageToEventHub<TweetModel>(EhEntityPath, newTweetReceivedExpanded).GetAwaiter().GetResult();
+                    }
+
                     await Task.Yield();
                 }
                 catch (Exception e)
