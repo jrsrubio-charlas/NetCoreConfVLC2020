@@ -4,12 +4,12 @@
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet",
 
-    "MyTwitterUser": "@jrsrubio",
+    "MyTwitterUser": "{xxx}",
 
-    "AzureSignalRConnectionString": "Endpoint=https://demo2signalr.service.signalr.net;AccessKey=SZSgHRRd6ee2WR3mJxRBoAqdSQGNN43nLRiN3KTvoeU=;Version=1.0;",
-    "EhConnectionString": "Endpoint=sb://signalrdemo2-eh.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=rHX/7jKM+JvKElZJR7s+KKVWJuy3SX1u6w/vVBhBGWk=",
+    "AzureSignalRConnectionString": "Endpoint={xxx};AccessKey={xxx};Version=1.0;",
+    "EhConnectionString": "Endpoint={xxx};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={xxx}",
 
-    "EhConnectionStringToSendTweet": "Endpoint=sb://signalrdemo2-eh.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=rHX/7jKM+JvKElZJR7s+KKVWJuy3SX1u6w/vVBhBGWk="
+    "EhConnectionStringToSendTweet": "Endpoint={xxx};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={xxx}"
   },
   "Host": {
     "LocalHttpPort": 9999,
